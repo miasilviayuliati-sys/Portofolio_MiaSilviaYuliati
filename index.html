@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Mia Silvia Yuliati</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-counter" id="load-percentage">0%</div>
+        <div class="progress-track">
+            <div class="progress-fill" id="load-fill"></div>
+        </div>
+        <p style="color: white; margin-top: 10px; letter-spacing: 2px;">MOHON TUNGGU...</p>
+    </div>
+
+    <nav>
+        <div style="font-weight: bold; font-size: 1.2rem;">PORTOFOLIO</div>
+        <ul>
+            <li><a href="#about" class="nav-link">Tentang</a></li>
+            <li><a href="#skills" class="nav-link">Skill</a></li>
+            <li><a href="#projects" class="nav-link">Proyek</a></li>
+            <li><a href="#certificates" class="nav-link">Sertifikat</a></li>
+            <li><a href="#exp" class="nav-link">Pengalaman</a></li>
+            <li><i class="fas fa-moon" id="theme-toggle"></i></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <img src="mia-profil.jpeg" alt="Foto Profil" class="profile-img">
+        <h1>Mia Silvia Yuliati</h1>
+        <p>Mahasiswa Informatika | Front-End & Image Processing Enthusiast</p>
+        <div>
+            <a href="CV Mia Silvia Yuliati.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> Unduh CV</a>
+            <a href="https://github.com/miasilviayuliati-sys" class="btn btn-outline" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+        <div class="social-links">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=miasilviayuliati@gmail.com" target="_blank">
+            <i class="fas fa-envelope"></i></a>
+            <a href="https://wa.me/6288226259930" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/misiyu_?igsh=MXczNXQ3bjJhNzI4Ng==" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@misiyu_12?_r=1&_t=ZS-95EJU3ufUyw" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@miasilviayuliati8615" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </header>
+
+    <section id="about">
+        <h2 class="section-title reveal">Tentang Saya</h2>
+        <div class="card reveal" style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px; text-align: center;">
+                <img src="Mia 3.jpg" alt="Mia Silvia" 
+                     style="width: 100%; max-width: 300px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+            </div>
+            <div style="flex: 2; min-width: 300px;">
+                <p style="line-height: 1.8; font-size: 1.1rem;">
+                    Halo! Saya adalah mahasiswa S1 Informatika di Universitas Nahdlatul Ulama Sidoarjo (UNUSIDA) semester 4. 
+                    Saya memiliki ketertarikan mendalam dalam membangun antarmuka web yang interaktif dan efisien. 
+                    Selain itu, saya juga aktif dalam organisasi mahasiswa untuk mengasah kemampuan kepemimpinan dan kerja tim.
+                </p>
+                <p style="margin-top: 15px; line-height: 1.8; font-size: 1.1rem;">
+                    Fokus utama saya saat ini adalah mendalami Front-End Development dan Image Processing menggunakan Python. 
+                    Saya selalu antusias untuk mempelajari teknologi baru dan menerapkannya dalam proyek-proyek yang bermanfaat.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" style="background: rgba(0, 168, 232, 0.1);">
+        <h2 class="section-title reveal">Keahlian</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <h3><i class="fas fa-code"></i> Web Development</h3>
+                <div style="margin-top: 15px;">
+                    <span class="skill-tag">HTML5</span> <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">JavaScript</span> <span class="skill-tag">React</span>
+                </div>
+            </div>
+            <div class="card reveal">
+                <h3><i class="fas fa-laptop-code"></i> Programming</h3>
+                <div style="margin-top: 15px;">
+                    <span class="skill-tag">Python</span> <span class="skill-tag">OpenCV</span>
+                    <span class="skill-tag">C++</span>
+                </div>
+            </div>
+            <div class="card reveal">
+                <h3><i class="fas fa-paint-brush"></i> Creative Design</h3>
+                <div style="margin-top: 15px;">
+                    <span class="skill-tag">Adobe Photoshop</span> <span class="skill-tag">CorelDRAW</span>
+                    <span class="skill-tag">Canva</span> <span class="skill-tag">CapCut</span>
+                    <span class="skill-tag">Adobe Premeire</span> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" style="background: rgba(0, 86, 179, 0.05);">
+        <h2 class="section-title reveal">Proyek Pilihan</h2>
+        <div class="grid">
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Digital Image Transformation</h3>
+                    <p>Manipulasi piksel menggunakan teknik Negatif, Logaritmik, dan Power-Law (Gamma) dengan Python & OpenCV.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">OpenCV</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1-breyRyQWzRPZ5q0-80MmhlqUX8hZ8Ga?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Image Enhancement & Gray Scale</h3>
+                    <p>Perbaikan kualitas citra melalui pendekatan statistik dan transformasi skala abu-abu untuk detail visual yang lebih tajam.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Statistics</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1KJjG6Z2tnbr0hOEqJvy8NifWsB51dsRG?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Simulasi Sistem Pembayaran SPBU</h3>
+                    <p>Implementasi logika alur transaksi bahan bakar mulai dari pemilihan jenis BBM hingga perhitungan kembalian.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Logic</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1jkCCeD2F-n9L4fGk86FfZAYfTFK2jQwl?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Student Data Management</h3>
+                    <p>Aplikasi pengelolaan data mahasiswa menggunakan struktur data List (Array) untuk menangani input data masal.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Array</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1B0Au93TYXcXJAs9VbnfIfxGzMOSguZpd?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Geometry Area Calculator</h3>
+                    <p>Kalkulator bidang datar yang mengimplementasikan berbagai rumus matematika ke dalam kode pemrograman.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Math</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1KuZE_vQ2AmsDDr1MHkQ5DwfF8lI4olCV?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certificates">
+        <h2 class="section-title reveal">Sertifikasi</h2>
+        <div class="grid">
+            <div class="card cert-card reveal">
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <i class="fas fa-certificate" style="font-size: 2rem; color: #ffd700;"></i>
+                    <div>
+                        <h4 style="margin-bottom: 5px;">Pelatihan Web Vol 1</h4>
+                        <p style="font-size: 0.85rem; color: #666;">HIMAIF - 2026</p>
+                        <a href="Sertifikat.png" target="_blank" class="btn-link" style="font-size: 0.8rem;">
+                            Lihat Sertifikat <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="exp">
+        <h2 class="section-title reveal">Pendidikan & Organisasi</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <h3><i class="fas fa-university"></i> Pendidikan</h3>
+                <p><strong>UNIVERSITAS NAHDLATUL ULAMA SIDOARJO</strong><br>S1 Informatika<br>2024 - Sekarang</p>
+                <hr style="margin: 15px 0; border: 0.5px solid #ccc; opacity: 0.3;">
+                <p><strong>SMK NEGERI 1 JABON</strong><br>MULTIMEDIA<br>2020 - 2023</p>
+                <hr style="margin: 15px 0; border: 0.5px solid #ccc; opacity: 0.3;">
+                <p><strong>SMP AVISENA KEDUNG CANGKRING</strong><br>2017 - 2020</p>
+            </div>
+            <div class="card reveal">
+                <h3><i class="fas fa-users"></i> Organisasi</h3>
+                <p><strong>HIMPUNAN MAHASISWA INFORMATIKA (HIMA IF) UNIVERSITAS NU SIDOARJO</strong><br>Anggota & Koordinasi Media<br>2024 - Sekarang</p>
+                <hr style="margin: 15px 0; border: 0.5px solid #ccc; opacity: 0.3;">
+                <p><strong>ORGANISASI SISWA INTRA SEKOLAH (OSIS) SMP AVISENA KEDUNG CANGKRING</strong><br>Wakil Ketua OSIS<br>2018 - 2019</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="text-align: center; padding: 80px 10%;">
+        <div class="reveal">
+            <h2 class="section-title">Mari Terhubung</h2>
+            <p>Ada proyek yang ingin dikerjakan bersama?</p>
+            <br>
+            <a href="https://wa.me/6288226259930" class="btn btn-primary" target="_blank" style="background-color: #25D366; border: none;">
+                <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Mia Silvia Yuliati. Dibuat dengan HTML & CSS.</p>
+    </footer>
+
+    <a href="#" id="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <script src="script.js"></script>
+</body>
+</html>

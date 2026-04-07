@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Mia Silvia Yuliati</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- TAMBAHAN STYLE LOADING --- */
+        #loader-wrapper {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0b1120;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+        .loader-counter {
+            font-size: 3.5rem; font-weight: bold; color: #00a8e8; margin-bottom: 10px;
+        }
+        .progress-track {
+            width: 250px; height: 10px; background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px; overflow: hidden;
+        }
+        .progress-fill {
+            width: 0%; height: 100%; background: #00a8e8;
+            box-shadow: 0 0 15px #00a8e8; transition: width 0.1s linear;
+        }
+        .loader-hidden { opacity: 0; visibility: hidden; }
+        /* ------------------------------ */
+
+        :root {
+            --primary-blue: #0056b3;
+            --secondary-blue: #00a8e8;
+            --dark-bg: #0b1120;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --white: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Dark Mode Toggle Styles */
+        body.dark-theme {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+        body.dark-theme .card, body.dark-theme nav {
+            background-color: #1e293b;
+            color: var(--text-light);
+        }
+        body.dark-theme .section-title { color: var(--secondary-blue); }
+        body.dark-theme .btn-link { color: var(--secondary-blue); }
+        body.dark-theme .cert-card p { color: #cbd5e1 !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--light-bg); color: var(--text-dark); scroll-behavior: smooth; overflow-x: hidden; }
+
+        /* --- ANIMASI TAMBAHAN (TANPA MERUBAH STRUKTUR) --- */
+        
+        /* 1. Animasi Floating Foto Profil */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .profile-img {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* 2. Animasi Kartu saat Hover */
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 86, 179, 0.15);
+            border-top-color: var(--secondary-blue);
+            transition: var(--transition);
+        }
+
+        /* 3. Animasi Zoom Gambar Proyek */
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+            transition: transform 0.5s ease;
+        }
+
+        /* 4. Efek Pulse pada Tombol Utama */
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(0, 168, 232, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 168, 232, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 168, 232, 0); }
+        }
+        .btn-primary {
+            animation: pulse-blue 2s infinite;
+        }
+
+        /* 5. Animasi Ikon Sosmed */
+        .social-links a:hover {
+            transform: scale(1.3) rotate(10deg);
+            display: inline-block;
+            color: var(--secondary-blue);
+        }
+
+        /* ----------------------------------------------- */
+
+        /* Navbar */
+        nav {
+            background: var(--white);
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: slideDown 0.8s ease-out;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav ul li { position: relative; }
+        nav ul li a { 
+            text-decoration: none; 
+            color: inherit; 
+            font-weight: 600; 
+            transition: var(--transition);
+            padding: 5px 0;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary-blue);
+            transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after { width: 100%; }
+        nav ul li a.active { color: var(--secondary-blue); }
+        nav ul li a.active::after { width: 100%; }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0, 86, 179, 0.8), rgba(0, 51, 102, 0.9)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--white);
+            text-align: center;
+        }
+        .profile-img {
+            width: 180px; height: 180px; border-radius: 50%;
+            border: 5px solid var(--secondary-blue); margin-bottom: 20px; object-fit: cover;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 25px; }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 25px; border-radius: 30px; text-decoration: none;
+            font-weight: bold; display: inline-block; transition: var(--transition); margin: 5px;
+        }
+        .btn-primary { background: var(--secondary-blue); color: white; border: none; cursor: pointer; }
+        .btn-primary:hover { background: var(--primary-blue); transform: scale(1.05); }
+        .btn-outline { border: 2px solid white; color: white; }
+        .btn-outline:hover { background: white; color: var(--primary-blue); }
+
+        /* Sections */
+        section { padding: 120px 10% 80px; min-height: 60vh; }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2.5rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card {
+            background: var(--white); padding: 30px; border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-top: 5px solid var(--primary-blue);
+            transition: var(--transition);
+        }
+
+        /* Project & Certificate */
+        .project-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+        .project-img { height: 180px; background-size: cover; background-position: center; transition: transform 0.5s ease; }
+        .project-info { padding: 20px; }
+        .btn-link { color: var(--primary-blue); text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: var(--transition); }
+        .btn-link:hover { color: var(--secondary-blue); text-decoration: underline; }
+        .cert-card { border-left: 5px solid #ffd700; border-top: none; margin-bottom: 10px; }
+
+        /* Social Links */
+        .social-links { margin-top: 20px; font-size: 1.5rem; }
+        .social-links a { color: white; margin: 0 10px; transition: 0.3s; display: inline-block; }
+
+        .skill-tag {
+            display: inline-block; background: var(--primary-blue); color: white;
+            padding: 5px 15px; border-radius: 20px; margin: 5px; font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .skill-tag:hover { background: var(--secondary-blue); transform: scale(1.1); }
+
+        /* Back to Top */
+        #back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background-color: var(--primary-blue); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            text-decoration: none; font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease; z-index: 1000;
+            opacity: 0; visibility: hidden;
+        }
+        #back-to-top.show { opacity: 1; visibility: visible; }
+        #back-to-top:hover { background-color: var(--secondary-blue); transform: translateY(-5px); }
+
+        #theme-toggle { cursor: pointer; font-size: 1.2rem; transition: transform 0.3s ease; }
+        #theme-toggle:hover { transform: rotate(30deg); }
+
+        /* ANIMASI REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav ul { display: none; }
+        }
+
+        @media print { nav, #back-to-top { display: none; } }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-counter" id="load-percentage">0%</div>
+        <div class="progress-track">
+            <div class="progress-fill" id="load-fill"></div>
+        </div>
+        <p style="color: white; margin-top: 10px; letter-spacing: 2px;">MOHON TUNGGU...</p>
+    </div>
+
+    <nav>
+        <div style="font-weight: bold; font-size: 1.2rem;">PORTOFOLIO</div>
+        <ul>
+            <li><a href="#about" class="nav-link">Tentang</a></li>
+            <li><a href="#skills" class="nav-link">Skill</a></li>
+            <li><a href="#projects" class="nav-link">Proyek</a></li>
+            <li><a href="#certificates" class="nav-link">Sertifikat</a></li>
+            <li><a href="#exp" class="nav-link">Pengalaman</a></li>
+            <li><i class="fas fa-moon" id="theme-toggle"></i></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <img src="mia-profil.jpeg" alt="Foto Profil" class="profile-img">
+        <h1>Mia Silvia Yuliati</h1>
+        <p>Mahasiswa Informatika | Front-End & Image Processing Enthusiast</p>
+        <div>
+            <a href="CV Mia Silvia Yuliati.pdf" class="btn btn-primary" download><i class="fas fa-download"></i> Unduh CV</a>
+            <a href="https://github.com/miasilviayuliati-sys" class="btn btn-outline" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+        <div class="social-links">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=miasilviayuliati@gmail.com" target="_blank">
+            <i class="fas fa-envelope"></i></a>
+            <a href="https://wa.me/6288226259930" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/misiyu_?igsh=MXczNXQ3bjJhNzI4Ng==" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@misiyu_12?_r=1&_t=ZS-95EJU3ufUyw" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@miasilviayuliati8615" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </header>
+
+    <section id="about">
+        <h2 class="section-title reveal">Tentang Saya</h2>
+        <div class="card reveal" style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px; text-align: center;">
+                <img src="Mia 3.jpg" alt="Mia Silvia" 
+                     style="width: 100%; max-width: 300px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+            </div>
+            <div style="flex: 2; min-width: 300px;">
+                <p style="line-height: 1.8; font-size: 1.1rem;">
+                    Halo! Saya adalah mahasiswa S1 Informatika di Universitas Nahdlatul Ulama Sidoarjo (UNUSIDA) semester 4. 
+                    Saya memiliki ketertarikan mendalam dalam membangun antarmuka web yang interaktif dan efisien. 
+                    Selain itu, saya juga aktif dalam organisasi mahasiswa untuk mengasah kemampuan kepemimpinan dan kerja tim.
+                </p>
+                <p style="margin-top: 15px; line-height: 1.8; font-size: 1.1rem;">
+                    Fokus utama saya saat ini adalah mendalami Front-End Development dan Image Processing menggunakan Python. 
+                    Saya selalu antusias untuk mempelajari teknologi baru dan menerapkannya dalam proyek-proyek yang bermanfaat.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" style="background: rgba(0, 168, 232, 0.1);">
+        <h2 class="section-title reveal">Keahlian</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <h3><i class="fas fa-code"></i> Web Development</h3>
+                <div style="margin-top: 15px;">
+                    <span class="skill-tag">HTML5</span> <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">JavaScript</span> <span class="skill-tag">React</span>
+                </div>
+            </div>
+            <div class="card reveal">
+                <h3><i class="fas fa-laptop-code"></i> Programming</h3>
+                <div style="margin-top: 15px;">
+                    <span class="skill-tag">Python</span> <span class="skill-tag">OpenCV</span>
+                    <span class="skill-tag">C++</span>
+                </div>
+            </div>
+            <div class="card reveal">
+                <h3><i class="fas fa-paint-brush"></i> Creative Design</h3>
+                <div style="margin-top: 15px;">
+                    <span class="skill-tag">Adobe Photoshop</span> <span class="skill-tag">CorelDRAW</span>
+                    <span class="skill-tag">Canva</span> <span class="skill-tag">CapCut</span>
+                    <span class="skill-tag">Adobe Premeire</span> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" style="background: rgba(0, 86, 179, 0.05);">
+        <h2 class="section-title reveal">Proyek Pilihan</h2>
+        <div class="grid">
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Digital Image Transformation</h3>
+                    <p>Manipulasi piksel menggunakan teknik Negatif, Logaritmik, dan Power-Law (Gamma) dengan Python & OpenCV.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">OpenCV</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1-breyRyQWzRPZ5q0-80MmhlqUX8hZ8Ga?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Image Enhancement & Gray Scale</h3>
+                    <p>Perbaikan kualitas citra melalui pendekatan statistik dan transformasi skala abu-abu untuk detail visual yang lebih tajam.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Statistics</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1KJjG6Z2tnbr0hOEqJvy8NifWsB51dsRG?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Simulasi Sistem Pembayaran SPBU</h3>
+                    <p>Implementasi logika alur transaksi bahan bakar mulai dari pemilihan jenis BBM hingga perhitungan kembalian.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Logic</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1jkCCeD2F-n9L4fGk86FfZAYfTFK2jQwl?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Student Data Management</h3>
+                    <p>Aplikasi pengelolaan data mahasiswa menggunakan struktur data List (Array) untuk menangani input data masal.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Array</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1B0Au93TYXcXJAs9VbnfIfxGzMOSguZpd?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="card project-card reveal">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="project-info">
+                    <h3>Geometry Area Calculator</h3>
+                    <p>Kalkulator bidang datar yang mengimplementasikan berbagai rumus matematika ke dalam kode pemrograman.</p>
+                    <div style="margin-top: 10px;">
+                        <span class="skill-tag" style="font-size: 0.7rem;">Python</span>
+                        <span class="skill-tag" style="font-size: 0.7rem;">Math</span>
+                    </div>
+                    <br>
+                    <a href="https://colab.research.google.com/drive/1KuZE_vQ2AmsDDr1MHkQ5DwfF8lI4olCV?usp=sharing" target="_blank" class="btn-link">Lihat Kode <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certificates">
+        <h2 class="section-title reveal">Sertifikasi</h2>
+        <div class="grid">
+            <div class="card cert-card reveal">
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <i class="fas fa-certificate" style="font-size: 2rem; color: #ffd700;"></i>
+                    <div>
+                        <h4 style="margin-bottom: 5px;">Pelatihan Web Vol 1</h4>
+                        <p style="font-size: 0.85rem; color: #666;">HIMAIF - 2026</p>
+                        <a href="Sertifikat.png" target="_blank" class="btn-link" style="font-size: 0.8rem;">
+                            Lihat Sertifikat <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="exp">
+        <h2 class="section-title reveal">Pendidikan & Organisasi</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <h3><i class="fas fa-university"></i> Pendidikan</h3>
+                <p><strong>UNIVERSITAS NAHDLATUL ULAMA SIDOARJO</strong><br>S1 Informatika<br>2024 - Sekarang</p>
+                <hr style="margin: 15px 0; border: 0.5px solid #ccc; opacity: 0.3;">
+                <p><strong>SMK NEGERI 1 JABON</strong><br>MULTIMEDIA<br>2020 - 2023</p>
+                <hr style="margin: 15px 0; border: 0.5px solid #ccc; opacity: 0.3;">
+                <p><strong>SMP AVISENA KEDUNG CANGKRING</strong><br>2017 - 2020</p>
+            </div>
+            <div class="card reveal">
+                <h3><i class="fas fa-users"></i> Organisasi</h3>
+                <p><strong>HIMPUNAN MAHASISWA INFORMATIKA (HIMA IF) UNIVERSITAS NU SIDOARJO</strong><br>Anggota & Koordinasi Media<br>2024 - Sekarang</p>
+                <hr style="margin: 15px 0; border: 0.5px solid #ccc; opacity: 0.3;">
+                <p><strong>ORGANISASI SISWA INTRA SEKOLAH (OSIS) SMP AVISENA KEDUNG CANGKRING</strong><br>Wakil Ketua OSIS<br>2018 - 2019</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="text-align: center; padding: 80px 10%;">
+        <div class="reveal">
+            <h2 class="section-title">Mari Terhubung</h2>
+            <p>Ada proyek yang ingin dikerjakan bersama?</p>
+            <br>
+            <a href="https://wa.me/6288226259930" class="btn btn-primary" target="_blank" style="background-color: #25D366; border: none;">
+                <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Mia Silvia Yuliati. Dibuat dengan HTML & CSS.</p>
+    </footer>
+
+    <a href="#" id="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <script>
+        // --- TAMBAHAN LOGIKA LOADING ---
+        function startLoader() {
+            const percentage = document.getElementById('load-percentage');
+            const fill = document.getElementById('load-fill');
+            const wrapper = document.getElementById('loader-wrapper');
+            let count = 0;
+            
+            const interval = setInterval(() => {
+                count++;
+                percentage.innerText = count + "%";
+                fill.style.width = count + "%";
+                
+                if(count >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        wrapper.classList.add('loader-hidden');
+                    }, 500);
+                }
+            }, 20); // Kecepatan loading (ms)
+        }
+        window.addEventListener('DOMContentLoaded', startLoader);
+        // -------------------------------
+
+        // Logika Dark Mode
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            let theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+            themeToggle.classList.replace(theme === 'dark' ? 'fa-moon' : 'fa-sun', theme === 'dark' ? 'fa-sun' : 'fa-moon');
+            localStorage.setItem('theme', theme);
+        });
+
+        // Logika Back to Top
+        const backTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) { backTop.classList.add('show'); }
+            else { backTop.classList.remove('show'); }
+        });
+
+        // Logika Scroll Spy
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Logika Animasi Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
